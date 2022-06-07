@@ -1,0 +1,115 @@
+﻿<Window x:Class="Project.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project"
+        mc:Ignorable="d"
+        Title="Project Calculator" Height="500" Width="350" FontSize="20" FontFamily="Segoe UI Light"
+        ResizeMode="NoResize" Background="Black"
+        BorderThickness="2,2,2,2" Foreground="{x:Null}" BorderBrush="#E5FFFFFF" KeyDown="Keyboard_press">
+    
+
+    <Window.Resources>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Black"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <ControlTemplate x:Key="ButtonTemplate1" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true" Margin="2">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="Button.IsDefaulted" Value="true">
+                    <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <!-- <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/> -->
+                    <Setter Property="BorderBrush" TargetName="border" Value="#FF92A4B1"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <!--<Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>-->
+                    <Setter Property="BorderBrush" TargetName="border" Value="White"/>
+                    <Setter Property="BorderThickness" TargetName="border" Value="2"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                    <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                    <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- BUTTONS -->
+        <!-- . -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="0" Grid.Row="6" Click="Btn_dot">.</Button>
+        <!-- 0 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="1" Grid.Row="6" Click="Btn_num">0</Button>
+        <!-- = -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="2" Grid.Row="6" Click="Btn_equal">=</Button>
+        <!-- / -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="3" Grid.Row="6" Click="Operator">/</Button>
+        <!-- 7 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="0" Grid.Row="5" Click="Btn_num">7</Button>
+        <!-- 8 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="1" Grid.Row="5" Click="Btn_num">8</Button>
+        <!-- 9 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="2" Grid.Row="5" Click="Btn_num">9</Button>
+        <!-- x -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="3" Grid.Row="5" Click="Operator">x</Button>
+        <!-- 4 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="0" Grid.Row="4" Click="Btn_num">4</Button>
+        <!-- 5 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="1" Grid.Row="4" Click="Btn_num">5</Button>
+        <!-- 6 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="2" Grid.Row="4" Click="Btn_num">6</Button>
+        <!-- - -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="3" Grid.Row="4" Click="Operator">-</Button>
+        <!-- 1 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="0" Grid.Row="3" Click="Btn_num">1</Button>
+        <!-- 2 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="1" Grid.Row="3" Click="Btn_num">2</Button>
+        <!-- 3 -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="2" Grid.Row="3" Click="Btn_num">3</Button>
+        <!-- + -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="3" Grid.Row="3" Click="Operator">+</Button>
+        <!-- Clear -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="0" Grid.Row="2" Click="Clear">Clear</Button>
+        <!-- Back -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="3" Grid.Row="2" Click="Back">Back</Button>
+        <!-- Load -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="1" Grid.Row="2"  Foreground="Gold" Click="Load_Click">Load</Button>
+        <!-- Save -->
+        <Button Template="{DynamicResource ButtonTemplate1}" Grid.Column="2" Grid.Row="2"  Foreground="Gold" Click="Save_Click">Save</Button>
+
+        <!-- TextBlock -->
+        <TextBlock x:Name="boxResult" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Margin="10" Background="Black" Foreground="White" FontSize="30"></TextBlock>
+        <TextBlock x:Name="boxMain" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Margin="10" Background="Black" FontSize="20" Foreground="White" VerticalAlignment="Center"></TextBlock>
+
+    </Grid>
+    
+    
+</Window>
