@@ -19,6 +19,9 @@ namespace Project
             CreateDirectory();
         }
 
+        /// <summary>
+        /// Variables
+        /// </summary>
         int numOp = 0;
         float TheResult = 0;
         List<string> operStore = new List<string>();
@@ -29,13 +32,19 @@ namespace Project
         static string dir = "CalculatorSavings";
         string path = dir + "\\" + date + "_" + name + ".txt";
 
-        //UI Events
+        /// <summary>
+        /// UI Events
+        /// <summary>
+        
         void Btn_num(object sender, RoutedEventArgs e) => NumberFunc(((Button)sender).Content.ToString());
         void Btn_dot(object sender, RoutedEventArgs e) => DotCheck();
         void Operator(object sender, RoutedEventArgs e) => CheckandCal(((Button)sender).Content.ToString());
         void Btn_equal(object sender, RoutedEventArgs e) => TheEnterKey();
         void Clear(object sender, RoutedEventArgs e) => ClearEverything();
         void Back(object sender, RoutedEventArgs e) => BackSpace();
+        /// <remarks> 
+        /// Function that allows using keyboard to enter numbers.
+        /// </remarks>
         void Keyboard_press(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -74,7 +83,7 @@ namespace Project
                 case Key.Decimal: DotCheck(); break;
                 case Key.Enter: TheEnterKey(); break;
                 case Key.Back: BackSpace(); break;
-                case Key.X: ClearEverything(); break;
+                case Key.Escape: ClearEverything(); break;
 
                 case Key.Add: CheckandCal("+"); break;
                 case Key.Subtract: CheckandCal("-"); break;
@@ -83,8 +92,10 @@ namespace Project
             }
         }
 
-        //Directory
-        void CreateDirectory()
+        /// <remarks> 
+        /// Function that checks if a directory exists (for saves calculation results) and creates it.
+        /// </remarks>
+        private void CreateDirectory()
         {
             try
             {
@@ -100,8 +111,10 @@ namespace Project
             }
         }
 
-        //Calculation logic
-        void NumberFunc(string? i)
+        /// <remarks> 
+        /// Function which displays numbers in TextBox named "boxResult".
+        /// </remarks>
+        private void NumberFunc(string? i)
         {
             if (boxResult.Text.Length == 1 && boxResult.Text.IndexOf("0") == 0)
                 boxResult.Text = i;
@@ -113,12 +126,18 @@ namespace Project
             resultShowing = false;
         }
 
-        void DotCheck()
+        /// <remarks>
+        /// Function which put dot to TextBox named "boxResult".
+        /// </remarks>
+        private void DotCheck()
         {
             if (!boxResult.Text.Contains(".")) { boxResult.Text += "."; }
         }
 
-        void CheckandCal(string? x)
+        /// <remarks>
+        /// Function which calculates and displays numbers and operators used to perform calculation.
+        /// </remarks>
+        private void CheckandCal(string? x)
         {
             if (resultShowing && boxMain.Text != "")
             {
@@ -147,7 +166,10 @@ namespace Project
             }
         }
 
-        float Calu(float x, string a, float y)
+        /// <remarks>
+        /// Calculation function.
+        /// </remarks>
+        private float Calu(float x, string a, float y)
         {
             float resu;
             switch (a)
@@ -165,7 +187,10 @@ namespace Project
             return resu;
         }
 
-        void BackSpace()
+        /// <remarks>
+        /// Function which deletes last typed number.
+        /// </remarks>
+        private void BackSpace()
         {
             if (resultShowing)
                 boxResult.Text = "0";
@@ -175,8 +200,10 @@ namespace Project
                 boxResult.Text = "0";
         }
 
-
-        void TheEnterKey()
+        /// <remarks>
+        /// Function which displays calculations in TextBox named "boxResult"
+        /// </remarks>
+        private void TheEnterKey()
         {
             if (resultShowing)
             {
@@ -199,7 +226,10 @@ namespace Project
             operStore.Clear();
         }
 
-        void ClearEverything()
+        /// <remarks>
+        /// Function which clears everything which was typed and stored before.
+        /// </remarks>
+        private void ClearEverything()
         {
             numOp = 0;
             TheResult = 0;
@@ -208,7 +238,9 @@ namespace Project
             operStore.Clear();
             resultShowing = false;
         }
-
+        /// <remarks>
+        /// Function which saves result of calculation to .txt file.
+        /// </remarks>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
                 using (StreamWriter writer = new StreamWriter(path))
@@ -235,6 +267,9 @@ namespace Project
             
         }
 
+        /// <remarks>
+        /// Function which loads selected .txt file with saved calculation result.
+        /// </remarks>
         private void Load_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
@@ -251,7 +286,5 @@ namespace Project
                 boxResult.Text = loaded;
             }
         }
-
     }
-    
 }
